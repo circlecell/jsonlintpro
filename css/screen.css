@@ -57,7 +57,7 @@ body {
 	height: 782px;
 }
 
-#results {
+.results {
   position: absolute;
   bottom: 10px;
   left: 58px;
@@ -65,7 +65,7 @@ body {
   z-index: 1;
 }
 
-#validate {
+.validate {
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -83,21 +83,21 @@ body {
 	background-position: center center;
 }
 
-#validate:hover {
+.validate:hover {
   background-color: #494C57;
 }
 
-#validate.error {
+.validate.error {
   background-color: #61160e;
 
 }
 
-#validate.success {
+.validate.success {
   background-color: #1e5d08;
 
 }
 
-#reset {
+.reset {
   position: absolute;
   top: 60px;
   right: 10px;
@@ -115,7 +115,7 @@ background-repeat: no-repeat;
 background-position: center center;
 }
 
-#reset:hover {
+.reset:hover {
   background-color: #494C57;
 }
 
@@ -629,12 +629,6 @@ textarea::-moz-placeholder {
   color: #555;
 }
 
-.error,.notice,.success {
-border: none;
-color: #A1A1A1;
-border-top: 1px solid #222;
-padding:.8em;
-}
 
 
 .notice {
