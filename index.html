@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="description" content="JSON Lint is a web based validator and reformatter for JSON, a lightweight data-interchange format.">
+    
+    <title>JSONLint - The JSON Validator</title>
+
+    <script type="text/javascript">
+        if (typeof JSON === 'undefined') {
+            document.write('<sc' + 'ript type="text/javascript" src="c/js/json2.js"></sc' + 'ript>');
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
+    <link href="css/jquery-linedtextarea.css" type="text/css" rel="stylesheet">
+</head>
+    <body>
+     	<a href="http://www.arc90.com/" id="arc90-logo" title="An Arc90 Lab Experiment">Arc90.com</a>
+      
+		<form class="JSONValidate" method="post" action="." name="JSONValidate">
+			<input type="hidden" id="reformat" value="1" />
+			<input type="hidden" id="compress" value="0" />
+			
+			<textarea id="json_input" name="json_input" class="json_input" rows="30" cols="100" spellcheck="false" placeholder="Enter JSON or a URL to validate..."></textarea>
+			
+			<button name="validate" id="validate" value="Lint Me!">Lint Me!</button>
+			<button name="reset" id="reset" value="Reset">Reset</button>
+			<button name="split" id="split-view" value="Split">Split</button>
+			
+			<pre id="results"></pre>
+		</form>
+		
+        <div id="results_header" class="hide">
+            <h3>
+                Results <img title="Loading..." class="reset" alt="Loading" src="images/loadspinner.gif" id="loadSpinner" name="loadSpinner">
+            </h3>
+        </div>
+        
+		<script src="js/jquery-1.6.1.min.js" type="text/javascript"></script>
+		<script src="js/jquery-linedtextarea.js" type="text/javascript"></script>
+		<script src="js/underscore.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/jsl.parser.js"></script>
+		<script type="text/javascript" src="js/jsl.format.js"></script>
+		<script type="text/javascript" src="js/jsl.interactions.js"></script>
+	</body>
+</html>
