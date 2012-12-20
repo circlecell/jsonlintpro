@@ -75,9 +75,8 @@
 			var linesDiv	= linedWrapDiv.find(".lines");
 			
 			if (opts.class) {
-		    linedWrapDiv.addClass(opts.class);
-		  }
-			
+				//linedWrapDiv.addClass(opts.class);
+			}
 			
 			/* Draw the number bar; filling it out where necessary */
 			linesDiv.append( "<div class='codelines'></div>" );

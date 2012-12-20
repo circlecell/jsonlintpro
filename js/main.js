@@ -29,7 +29,7 @@ require.config({
 });
 
 require([
-    'jQuery',
-    'Underscore',
-    'Backbone'
+	'jQuery',
+	'Underscore',
+	'Backbone'
 ]);

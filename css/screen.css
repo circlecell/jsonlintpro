@@ -44,79 +44,143 @@ table {
 
 body {
   line-height:1.5;
-  background:#333;
+  background:#E5E9EB;
   font-size:14px;
   color:#777;
   font-family:"Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
 }
 
+a:link {
+	transition: all 100ms;
+	-moz-transition: all 100ms;
+	-webkit-transition: all 100ms;
+	-o-transition: all 2s;
+}
+
 .JSONValidate {
-	position: relative;
-	float: left;
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
-	height: 782px;
+}
+
+.split .JSONValidate {
+	width: 50%;
+}
+
+.JSONValidate:after {
+	clear: both;
+	content: '';
+	display: block;
 }
 
 .results {
-  position: absolute;
-  bottom: 10px;
-  left: 58px;
-  width: 90%;
-  z-index: 1;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	background: rgba(0,0,0,0.1);
+	padding: 15px 30px 15px 78px;
+	font-family: "Myriad Pro", "Helvetica", sans-serif;
+	display: none;
+	color: #444;
+	margin: 0;
+	border-top: 1px solid #C1C8D1;
+	box-sizing: border-box;
+}
+
+.arrow-right {
+	position: absolute;
+	top: 17px;
+	right: -10px;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #333;
+	border-right: 5px solid transparent;
+}
+
+.error-message {
+	float: left;
+	display: block;
+margin: 0;
+}
+
+.button {
+	z-index: 1;
+	background-color: #E5E9EB;//#D2D4DB;
+	border: 1px solid #D2D4DB;
+	padding: 10px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+.button .icon {
+	font-size: 0;
+	text-indent: -9999px;
+	width: 22px;
+	height: 22px;
+	display: block;
+	opacity: 0.2;
+	background-repeat: no-repeat;
+	background-position: center center;
+	transition: all 100ms;
+	-moz-transition: all 100ms;
+	-webkit-transition: all 100ms;
+	-o-transition: all 2s;
+}
+
+.button:hover {
+	background-color: #FFF;	
+}
+
+.button:hover .icon {
+	opacity: 1;
+}
+
+.button.error {
+  background-color: #AD5E56;
+  border-color: #AD5E56;
+}
+
+.button.success {
+  background-color: #9CBE43;
+  border-color: #9CBE43;
+}
+
+.button.error .icon,
+.button.success .icon {
+	opacity: 1;
 }
 
 .validate {
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	z-index: 1;
-	background-color: #373A44;
-	border: none;
-	padding: 20px;
-	cursor: pointer;
-	font-size: 0;
-	text-indent: -9999px;
-	background-image: url(../images/validate_check.png);
-	width: 22px;
-	height: 22px;
-	background-repeat: no-repeat;
-	background-position: center center;
+	top: 20px;
+	right: 20px;
 }
 
-.validate:hover {
-  background-color: #494C57;
+.validate .icon {
+		background-image: url(../images/validate_check.png);
 }
-
-.validate.error {
-  background-color: #61160e;
-
-}
-
-.validate.success {
-  background-color: #1e5d08;
-
-}
-
 .reset {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  z-index: 1;
-  background-color: #373A44;
-border: none;
-padding: 20px;
-cursor: pointer;
-font-size: 0;
-text-indent: -9999px;
-background-image: url(../images/trash_icon.png);
-width: 22px;
-height: 22px;
-background-repeat: no-repeat;
-background-position: center center;
+	position: absolute;
+	top: 120px;
+	right: 20px; 
 }
 
-.reset:hover {
-  background-color: #494C57;
+.reset .icon {
+		background-image: url(../images/trash_icon.png);
+}
+
+.split-view {
+	position: absolute;
+	top:70px;
+	right: 20px;
+}
+
+.split-view .icon {
+		background-image: url(../images/split_view_icon.png);
 }
 
 pre,code {
@@ -609,8 +673,8 @@ textarea {
 	width:100%;
 	height:100%;
 	border:none;
-	padding:10px;
-	padding-left: 68px;
+	padding:20px;
+	padding-left: 78px;
 	box-sizing: border-box;
 	outline: none;
 	position: absolute;
@@ -619,8 +683,9 @@ textarea {
 	z-index: 0;
 	line-height: 1.2;
 	font-size: 10pt;
-	background: #131518;
-	color: #f1f1f1;
+	background: #E5E9EB;
+	color: #444;
+	word-wrap: break-word;
 	font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
 
@@ -662,8 +727,8 @@ color:#666;
 }
 
 #arc90-logo {
-  width: 69px;
-  height: 27px;
+  width: 58px;
+  height: 22px;
   background: transparent url(../images/arc90_logo.png) 0 0 no-repeat;
   position: absolute;
   right: 20px;
@@ -672,9 +737,10 @@ color:#666;
   font-size: 0;
   text-indent: -9999px;
   z-index: 2;
+  opacity: 0.3;
 }
 
 #arc90-logo:hover {
-  background-position: bottom left;
+  opacity: 1;
 }
 

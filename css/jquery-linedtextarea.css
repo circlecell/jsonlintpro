@@ -62,20 +62,20 @@ textarea { resize:both; }
 	width: 50px;
 	float: left;
 	overflow: hidden;
-	border-right: 1px solid #2B2D33;
+	border-right: 1px solid #C1C7CF;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  background: #21252E;
+  background: #DADDDF;
 }
 
 .linedwrap .codelines {
-	padding-top: 10px;
+	padding-top: 20px;
 }
 
 .linedwrap .codelines .lineno {
-	color:#5d5d5d;
+	color:#ABADB1;
 	padding-right: 0.5em;
 	padding-top: 0.0em;
 	text-align: right;

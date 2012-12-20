@@ -3,44 +3,63 @@
  * Should be a ``FORM`` with buttons and results included
  */
 define([
-    'jQuery',
     'Underscore',
-    'Backbone'
+    'Backbone',
+    'text!templates/validatorTemplate.html'
 ], function (
-    $,
     _,
-    Backbone
+    Backbone,
+    validatorTemplate
 ) {
 	
-	var TABCHARS = "    ";
+	var TABCHARS = "    ",
+		PADDING = 40;
 
 	return Backbone.View.extend({
 		events : {
 			'click .validate' 		: 'onValidate',
 			'keyup .json_input' 	: 'onKeyUp',
 			'keydown .json_input' 	: 'onKeyDown',
-			'click .reset' 			: 'onReset'
+			'click .reset' 			: 'onReset',
+			'click .split-view'     : 'onSplitView'
 		},
 		
 		initialize : function () {
 			_.bindAll(this);
 			
 			_.defaults(this.options, {
-				reformat 	: true,
-				jsonParam 	: false
+				reformat 	 : true,
+				jsonParam 	 : false,
+				windowObject : window
 			});
 			
 			this.jsonParam 	= this.options.jsonParam;
 			this.reformat 	= this.options.reformat;
-			this.textarea 	= this.$('.json_input');
-			        
-			this._checkForJSONParam();
+			this.windowObject = this.options.windowObject;
 			
+			$(this.windowObject).resize(this.resize);
+			
+			this._checkForJSONParam();
+
 	        this.render();
 		},
 		
 		render : function () {
-	        this.textarea.linedtextarea().focus();
+			var el = $(validatorTemplate);
+							
+			this.$el.replaceWith(el);
+			this.setElement(el);
+						
+			this.textarea = this.$('.json_input'); 			
+
+	        _.delay(this.resize, 150);
+		},
+		
+		resize : function () {
+			var height = $(this.windowObject).height();
+			
+			this.$el.height(height);
+			this.textarea.height(height - PADDING);	
 		},
 		
 		/**
@@ -93,6 +112,8 @@ define([
 			ev.preventDefault();
 			
 			this.textarea.val('').focus();		
+			this.$('.results').hide();
+			this.$('.validate').removeClass('error success');
 		},
 		
 		validate : function (options) {
@@ -178,7 +199,7 @@ define([
 	            this.textarea.focus().caret(lineStart, lineEnd);
 	        }
 	
-	        this.$('.results').text(parseException.message);
+	        this.$('.results').show().text(parseException.message);
 	
 	        this.$('.validate').removeClass('success').addClass('error');
 	    },
@@ -187,7 +208,7 @@ define([
 	     * Function to insert our tab spaces
 	     */
 	    _insertAtCaret : function (text) {
-	    	element = document.getElementById('json_input');
+	    	element = this.textarea[0];
 	        
 	        if (document.selection) {
 	            element.focus();
@@ -237,6 +258,12 @@ define([
 	        }
 	
 	        return charCount;
+	    },
+	    
+	    onSplitView : function (ev) {
+		    ev.preventDefault();
+		    
+		    this.trigger('split:view');
 	    }
 	});
 });
