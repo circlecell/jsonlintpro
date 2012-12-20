@@ -89,18 +89,12 @@
 				var position = parseInt( fontSize * opts.selectedLine ) - (textarea.height()/2);
 				textarea[0].scrollTop = position;
 			}
-
 			
 			/* Set the width */
 			var sidebarWidth		= linesDiv.outerWidth(true);
 			var paddingHorizontal 		= parseInt( linedWrapDiv.css("border-left-width") ) + parseInt( linedWrapDiv.css("border-right-width") ) + parseInt( linedWrapDiv.css("padding-left") ) + parseInt( linedWrapDiv.css("padding-right") );
 			var linedWrapDivNewWidth 	= originalTextAreaWidth - paddingHorizontal;
 			var textareaNewWidth		= originalTextAreaWidth - sidebarWidth - paddingHorizontal;
-
-			//textarea.width( textareaNewWidth);
-			//textarea.css({maxWidth: textareaNewWidth - 6}); //TODO make this calculated
-			
-
 			
 			/* React to the scroll event */
 			textarea.scroll( function(tn){

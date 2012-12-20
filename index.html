@@ -23,9 +23,9 @@
 		<input type="hidden" id="compress" value="0" />
 			
 		<div id="validator-placeholder1"></div>
-				<div id="validator-placeholder2"></div>
+		<div id="validator-placeholder2"></div>
+		<div id="diff-placeholder"></div>
 
-		
         <div id="results_header" class="hide">
             <h3>
                 Results <img title="Loading..." class="reset" alt="Loading" src="images/loadspinner.gif" id="loadSpinner" name="loadSpinner">
@@ -37,38 +37,89 @@
         <script>
 	        require([
 	            'bootstrap.bundle',
-	            'jsonlint/ValidatorView'
-	        ], function() {
-		        var ValidatorView = require('jsonlint/ValidatorView'),
-				    JSON_PARAM = _getURLParameter('json'),  
-				    validatorView1,
-				    validatorView2,
-				    enterSplitMode;
+	            'lib/diff',
+	            'jsonlint/ValidatorView',
+	            'jsonlint/SecondaryValidatorView',
+	            'jsonlint/DiffView'
+	        ], function(noop, noop, ValidatorView, SecondaryValidatorView, DiffView) {
+		        var JSON_PARAM = _getURLParameter('json'),  
+				    primaryValidator,
+				    secondaryValidator,
+				    diffView,
+				    enterSplitMode,
+				    exitSplitMode,
+				    runDiff,
+				    exitDiff;
 				
 				// this needs to be in a composite
-				validatorView1 = new ValidatorView({
+				primaryValidator = new ValidatorView({
 				    el 			: $('#validator-placeholder1'),
-					jsonParam 	: JSON_PARAM
+					jsonParam 	: JSON_PARAM,
+					className	: 'primary'
 			    });
 			 			    
-			    validatorView2  = new ValidatorView({
+			    secondaryValidator  = new SecondaryValidatorView({
 				    el 			: $('#validator-placeholder2'),
 					jsonParam 	: false
 			    });
-			    
+			    	    			 			    
+			    diffView  = new DiffView({
+				    el 			: $('#diff-placeholder')
+			    });
+			    			    
 			    enterSplitMode = function () {
-				    validatorView1.$el.animate({
+				    primaryValidator.hideSplitToggle();
+				    
+				    primaryValidator.$el.animate({
+					   width : '50%' 
+				    }, 100);
+			    };
+			    
+			    exitSplitMode = function () {
+				    primaryValidator.showSplitToggle();
+				    
+				    primaryValidator.$el.animate({
+					   width : '100%' 
+				    }, 100, secondaryValidator.resetView);
+			    };
+			    
+			    runDiff = function () {
+				  	var valA = primaryValidator.textarea.val(),
+				  		valB = secondaryValidator.textarea.val(),
+				  		diff = htmlDiff(valA, valB);
+				  		
+				  	diffView.setHTML(diff);
+				  					    
+				    primaryValidator.$el.animate({
+					   width : '33%' 
+				    }, 100);
+				    
+				    secondaryValidator.$el.animate({
+					   width : '33%',
+					   left: '33%'
+				    }, 100);
+				  	
+				  	diffView.show();			  
+			    };
+			    
+			    exitDiff = function () {
+				  	primaryValidator.$el.animate({
 					   width : '50%' 
 				    }, 100);
 				    
-				    validatorView2.$el.animate({
+				    secondaryValidator.$el.animate({
 					   width : '50%',
 					   left: '50%'
 				    }, 100);
+				  	
+				  	diffView.hide();			  
 			    };
 
-			    validatorView2.on('split:view', enterSplitMode);
-    
+			    primaryValidator.on('split:enter', 	enterSplitMode);
+   			    secondaryValidator.on('split:exit',   	exitSplitMode);
+    			secondaryValidator.on('diff',   	runDiff);
+    			diffView.on('diff:cancel',   	exitDiff);
+
 			    $('.json_input').linedtextarea();
 	        });
 	    </script>

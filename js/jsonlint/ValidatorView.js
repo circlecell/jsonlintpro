@@ -1,6 +1,7 @@
 /**
  * Our Base View for validators.
  * Should be a ``FORM`` with buttons and results included
+ * Can never be ``display: none`` due to lined-textarea
  */
 define([
     'Underscore',
@@ -13,7 +14,8 @@ define([
 ) {
 	
 	var TABCHARS = "    ",
-		PADDING = 40;
+		PADDING = 40,
+		FADE_SPEED = 150;
 
 	return Backbone.View.extend({
 		events : {
@@ -21,7 +23,8 @@ define([
 			'keyup .json_input' 	: 'onKeyUp',
 			'keydown .json_input' 	: 'onKeyDown',
 			'click .reset' 			: 'onReset',
-			'click .split-view'     : 'onSplitView'
+			'click .split-view'     : 'onSplitView',
+			'click .diff'			: 'onDiff'
 		},
 		
 		initialize : function () {
@@ -30,7 +33,8 @@ define([
 			_.defaults(this.options, {
 				reformat 	 : true,
 				jsonParam 	 : false,
-				windowObject : window
+				windowObject : window,
+				className	 : ''
 			});
 			
 			this.jsonParam 	= this.options.jsonParam;
@@ -49,6 +53,8 @@ define([
 							
 			this.$el.replaceWith(el);
 			this.setElement(el);
+			
+			this.$el.addClass(this.options.className);
 						
 			this.textarea = this.$('.json_input'); 			
 
@@ -111,6 +117,10 @@ define([
 		onReset : function (ev) {
 			ev.preventDefault();
 			
+			this.resetView();
+		},
+		
+		resetView : function () {
 			this.textarea.val('').focus();		
 			this.$('.results').hide();
 			this.$('.validate').removeClass('error success');
@@ -260,10 +270,24 @@ define([
 	        return charCount;
 	    },
 	    
+	    hideSplitToggle : function () {
+		  	this.$('.split-view').hide();  
+	    },
+	    
+	    showSplitToggle : function () {
+		  	this.$('.split-view').show();  
+	    },
+	    
 	    onSplitView : function (ev) {
 		    ev.preventDefault();
 		    
-		    this.trigger('split:view');
+		    this.trigger('split:enter');
+	    },
+	    
+	    onDiff : function (ev) {
+		    ev.preventDefault();
+
+		    this.trigger('diff');
 	    }
 	});
 });
