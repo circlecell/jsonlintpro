@@ -32,19 +32,17 @@ define([
 			
 			_.defaults(this.options, {
 				reformat 	 : true,
-				jsonParam 	 : false,
+				json 		 : false,
 				windowObject : window,
 				className	 : ''
 			});
 			
-			this.jsonParam 	= this.options.jsonParam;
+			this.json 	= this.options.json;
 			this.reformat 	= this.options.reformat;
 			this.windowObject = this.options.windowObject;
 			
 			$(this.windowObject).resize(this.resize);
 			
-			this._checkForJSONParam();
-
 	        this.render();
 		},
 		
@@ -56,7 +54,9 @@ define([
 			
 			this.$el.addClass(this.options.className);
 						
-			this.textarea = this.$('.json_input'); 			
+			this.textarea = this.$('.json_input'); 	
+			
+			this._checkForJSON();
 
 	        _.delay(this.resize, 150);
 		},
@@ -72,11 +72,11 @@ define([
 		* Validate any json passes in through the URL
 		* @usage: ?json={}
 		*/	
-		_checkForJSONParam : function () {
-	        if (this.jsonParam) {
-	            this.textarea.val(this.jsonParam);
+		_checkForJSON : function () {
+	        if (this.json) {
+	            this.textarea.val(this.json);
 	            
-	            validate();
+	            this.validate();
 	        }
 		},
 		
@@ -276,6 +276,39 @@ define([
 	    
 	    showSplitToggle : function () {
 		  	this.$('.split-view').show();  
+	    },
+	    
+	    enterSplitMode : function (callback) {
+	    	callback || (callback = $.noop);
+	    	
+	    	this.hideSplitToggle();
+	    	
+		    this.$el.animate({
+			   width : '50%' 
+		    }, FADE_SPEED, callback);
+	    },
+	    
+	    exitSplitMode : function (callback) {
+	    	callback || (callback = $.noop);
+
+		   	this.$el.animate({
+			   width : '100%' 
+		    }, FADE_SPEED, _.bind(function () {
+			    callback();
+			    this.showSplitToggle();
+		    }, this));
+	    },
+	    
+	    enterDiffMode : function () {
+		  	this.$el.animate({
+			   width : '33%' 
+		    }, FADE_SPEED);  
+	    },
+	    
+	    exitDiffMode : function () {
+		    this.$el.animate({
+			   width : '50%'
+		    }, FADE_SPEED);
 	    },
 	    
 	    onSplitView : function (ev) {

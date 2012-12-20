@@ -51,6 +51,10 @@ define([
 			this.$('.json_input').html(html);
 		},
 		
+		isActive : function () {
+			return this.$el.hasClass('active');	
+		},
+		
 		show : function () {
 			if (this.$el.hasClass('active')) {
 				return;

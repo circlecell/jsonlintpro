@@ -31,6 +31,20 @@ define([
 		    ev.preventDefault();
 		    
 		    this.trigger('split:exit');
+	    },
+	    
+	    enterDiffMode : function () {
+		    this.$el.animate({
+			   width : '33%',
+			   left: '33%'
+		    }, FADE_SPEED);
+	    },
+	    
+	    exitDiffMode : function () {
+		    this.$el.animate({
+			   width : '50%',
+			   left: '50%'
+		    }, FADE_SPEED);
 	    }
 	});
 });
