@@ -6,10 +6,14 @@
 define([
     'Underscore',
     'Backbone',
+    'jsonlint/ErrorView',
+    'utils/utils',
     'text!templates/validatorTemplate.html'
 ], function (
     _,
     Backbone,
+    ErrorView,
+    HelperFunctions,
     validatorTemplate
 ) {
 	
@@ -54,11 +58,25 @@ define([
 			
 			this.$el.addClass(this.options.className);
 						
-			this.textarea = this.$('.json_input'); 	
+			this.textarea = this.$('.json_input'); 
+			
+			this.textarea.scroll(_.bind(function () {
+				var offset = this.textarea.scrollTop();
+				
+				this.errorView.setScrollOffset(offset);
+			}, this));	
 			
 			this._checkForJSON();
+			
+			this.createErrorView();
 
 	        _.delay(this.resize, 150);
+		},
+		
+		createErrorView : function () {
+			this.errorView = new ErrorView();
+			
+			this.$el.append(this.errorView.$el);
 		},
 		
 		resize : function () {
@@ -122,7 +140,7 @@ define([
 		
 		resetView : function () {
 			this.textarea.val('').focus();		
-			this.$('.results').hide();
+			this.errorView.hide();
 			this.$('.validate').removeClass('error success');
 		},
 		
@@ -163,7 +181,7 @@ define([
 	        this.textarea.val(JSON.stringify(JSON.parse(jsonVal), null, tab_chars));    
 	    
 			this.$('.validate').removeClass('error').addClass('success');
-			this.$('.results').hide();
+			this.errorView.hide();
 	    },
 	    
 	    /** 
@@ -190,7 +208,8 @@ define([
 	        var lineMatches = parseException.message.match(/line ([0-9]*)/),
 				lineNum,
 				lineStart,
-				lineEnd;
+				lineEnd,
+				offset;
 	        
 	        if (lineMatches && typeof lineMatches === "object" && lineMatches.length > 1) {
 	            lineNum = parseInt(lineMatches[1], 10);
@@ -205,11 +224,19 @@ define([
 	            if (lineEnd < 0) {
 	                lineEnd = jsonVal.length;
 	            }
-	
-	            this.textarea.focus().caret(lineStart, lineEnd);
+	            	
+	            this.textarea.focus().caret(lineStart, lineEnd);    
+	        
+	            offset = HelperFunctions.getTextBoundingRect(this.textarea[0],lineStart, lineEnd, false);
 	        }
-	
-	        this.$('.results').show().text(parseException.message);
+	        
+	        this.showValidationError(offset);
+	    },
+	    
+	    showValidationError : function (offset) {
+		    this.errorView.setError(parseException.message);
+		    this.errorView.setPosition(offset);
+		    this.errorView.show();
 	
 	        this.$('.validate').removeClass('success').addClass('error');
 	    },
@@ -321,6 +348,10 @@ define([
 		    ev.preventDefault();
 
 		    this.trigger('diff');
+	    },
+	    
+	    getValue : function () {
+		    return this.textarea.val();
 	    }
 	});
 });

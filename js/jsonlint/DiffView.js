@@ -55,28 +55,16 @@ define([
 			return this.$el.hasClass('active');	
 		},
 		
-		show : function () {
-			if (this.$el.hasClass('active')) {
-				return;
-			}
-			
-			this.$el.animate({
-				right: '0'
-			}, 150, _.bind(function () {
+		onShow : function () {
+			if (!this.$el.hasClass('active')) {
 				this.$el.addClass('active')
-			}, this));
+			}
 		},
 		
-		hide : function () {
-			if (!this.$el.hasClass('active')) {
-				return;
-			}
-			
-			this.$el.animate({
-				right: '-34%'
-			}, 150, _.bind(function () {
+		onHide : function () {
+			if (this.$el.hasClass('active')) {
 				this.$el.removeClass('active')
-			}, this));
+			}
 		},
 		
 		onCancel : function (ev) {

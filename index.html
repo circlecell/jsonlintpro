@@ -37,10 +37,9 @@
 	            'bootstrap.bundle',
 	            'lib/diff',
 	            'jsonlint/JSONComposite',
-	            'jsonlint/SecondaryValidatorView',
-	            'jsonlint/DiffView'
-	        ], function(noop, noop, JSONComposite) {
-		        var JSON_PARAM = _getURLParameter('json');
+	            'utils/utils'
+	        ], function(noop, noop, JSONComposite, HelpferFunctions) {
+		        var JSON_PARAM = HelpferFunctions._getURLParameter('json');
 				
 				// this needs to be in a composite
 				jsonComposite = new JSONComposite({

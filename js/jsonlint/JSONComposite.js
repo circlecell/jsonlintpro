@@ -85,16 +85,15 @@ define([
 	    },
 	    
 	    enterDiffMode : function () {
-		    	this._setDiff();
-	    		    	if (!this.diffView.isActive()) {
-
-		  					    
-		    this.primaryValidator.enterDiffMode();
-		    
-		    this.secondaryValidator.enterDiffMode();
-		  	
-		  	this.diffView.show();
-		  	}			  
+		    if (this._setDiff()) {
+			    if (!this.diffView.isActive()) {	  					    
+				    this.primaryValidator.enterDiffMode();
+				    
+				    this.secondaryValidator.enterDiffMode();
+				  	
+				  	this.diffView.onShow();
+			  	}			
+		    }  
 	    },
 	    
 	    exitDiffMode : function () {
@@ -102,15 +101,25 @@ define([
 		    
 		    this.secondaryValidator.exitDiffMode();
 		    		  	
-		  	this.diffView.hide();			  
+		  	this.diffView.onHide();
 	    },
 	    
 	    _setDiff : function () {
-		   	var valA = this.primaryValidator.textarea.val(),
-		  		valB = this.secondaryValidator.textarea.val(),
+	    	this.primaryValidator.validate();
+		    this.secondaryValidator.validate();
+		    
+		   	var valA = this.primaryValidator.getValue(),
+		  		valB = this.secondaryValidator.getValue(),
+		  		diff;
+		  	
+		  	if (valA.length && valB.length) {
 		  		diff = htmlDiff(valA, valB);
-		  		
-		  	this.diffView.setHTML(diff);
+	  	
+			  	this.diffView.setHTML(diff);
+			  	return true;
+		  	}
+		  	
+		  	return false;
 	    }
 	});
 });
