@@ -7,8 +7,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -19,7 +19,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -103,7 +103,7 @@ body {
 	right: -7px;
 	width: 22px;
 	height: 22px;
-	text-decoration: none;	
+	text-decoration: none;
 	color: #c1c1c1;
 	border-radius: 20px;
 	-moz-border-radius: 20px;
@@ -179,7 +179,7 @@ box-shadow: 0 1px 0 #F1F1F1;
 }
 
 .button:hover {
-	background-color: #FFF;	
+	background-color: #FFF;
 }
 
 .button:hover .icon {
@@ -216,8 +216,12 @@ box-shadow: 0 1px 0 #F1F1F1;
 		background-position: -22px 0;
 }
 
-.split-view {
+.primary .split-view {
 	top: 120px;
+}
+
+.split-view {
+	top: 170px;
 	display: none;
 }
 
@@ -226,7 +230,7 @@ box-shadow: 0 1px 0 #F1F1F1;
 }
 
 .split-view.cancel .icon {
-		background-position: -66px 0;
+		background-position: -110px 0;
 }
 
 ins {
@@ -255,7 +259,7 @@ del {
 }
 
 .diff {
-	top: 170px;
+	top: 120px;
 	display: none;
 }
 
@@ -840,7 +844,7 @@ font-weight:700;
 	filter: none;
 	-webkit-filter: grayscale(0%);
 }
-   
+
 #help {
 	position: absolute;
 	bottom: 20px;
@@ -918,5 +922,5 @@ font-weight:700;
 	.split-view {
 		display: block;
 	}
-	
+
 }
