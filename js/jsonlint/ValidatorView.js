@@ -74,7 +74,11 @@ define([
 		},
 		
 		createErrorView : function () {
-			this.errorView = new ErrorView();
+			this.errorView = new ErrorView({
+				container : this.$el
+			});
+			
+			this.errorView.on('error:hide', this.resetErrors);
 			
 			this.$el.append(this.errorView.$el);
 		},
@@ -140,6 +144,10 @@ define([
 		
 		resetView : function () {
 			this.textarea.val('').focus();		
+			this.resetErrors();
+		},
+		
+		resetErrors : function () {
 			this.errorView.hide();
 			this.$('.validate').removeClass('error success');
 		},

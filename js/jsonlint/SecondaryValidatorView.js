@@ -36,8 +36,10 @@ define([
 	    enterDiffMode : function () {
 		    this.$el.animate({
 			   width : '33%',
-			   left: '33%'
+			   left: '67%'
 		    }, FADE_SPEED);
+		    
+		    this.$('.diff, .split-view').hide();
 	    },
 	    
 	    exitDiffMode : function () {
@@ -45,6 +47,8 @@ define([
 			   width : '50%',
 			   left: '50%'
 		    }, FADE_SPEED);
+		    
+		    this.$('.diff, .split-view').show();
 	    }
 	});
 });

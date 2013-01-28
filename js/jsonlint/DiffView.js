@@ -19,6 +19,7 @@ define([
 
 	return Backbone.View.extend({	
 		events : {
+			'click .diff' : 'onDiff',
 			'click .cancel-diff' : 'onCancel'	
 		},
 		
@@ -36,7 +37,9 @@ define([
 			var el = $(diffTemplate);
 							
 			this.$el.replaceWith(el);
-			this.setElement(el);						
+			this.setElement(el);
+			
+			this.$('.diff').show();						
 
 	        _.delay(this.resize, 150);
 		},
@@ -59,6 +62,11 @@ define([
 			if (!this.$el.hasClass('active')) {
 				this.$el.addClass('active')
 			}
+		},
+		
+		onDiff : function (ev) {
+			ev.preventDefault();
+			this.trigger('diff');
 		},
 		
 		onHide : function () {

@@ -18,8 +18,14 @@ define([
     DiffView,
     jsonCompositeTemplate
 ) {
+	var FADE_SPEED = 100;
 
-	return Backbone.View.extend({	
+	return Backbone.View.extend({
+		events : {
+			'click #close-tips' : 'onHideHelp',
+			'click #help'       : 'onShowHelp'	
+		},
+		
 		initialize : function () {
 			_.bindAll(this);
 			
@@ -60,10 +66,23 @@ define([
 			this.secondaryValidator.on('split:exit',   	this.exitSplitMode);
 			this.secondaryValidator.on('diff',   		this.enterDiffMode);
 			this.diffView.on('diff:cancel',   			this.exitDiffMode);
+			this.diffView.on('diff',   					this._setDiff);
 
 			this.$('.json_input').linedtextarea();
 			
 	        _.delay(this.resize, 150);
+		},
+		
+		onShowHelp : function (ev) {
+			ev.preventDefault();
+			
+			this.$('#tips-and-tricks').fadeIn(FADE_SPEED);
+		},
+		
+		onHideHelp : function (ev) {
+			ev.preventDefault();
+			
+			this.$('#tips-and-tricks').fadeOut(FADE_SPEED);
 		},
 		
 		resize : function () {
@@ -78,10 +97,6 @@ define([
 	    
 	    exitSplitMode : function () {		    
 		    this.primaryValidator.exitSplitMode(this.secondaryValidator.resetView);
-		  	
-		  	this.diffView.hide();			  
-	    
-	        this.secondaryValidator.exitDiffMode();
 	    },
 	    
 	    enterDiffMode : function () {
