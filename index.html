@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="description" content="JSON Lint is a web based validator and reformatter for JSON, a lightweight data-interchange format.">
-
+    
     <title>JSONLint - The JSON Validator</title>
 
     <script type="text/javascript">
@@ -21,7 +21,7 @@
 
 		<input type="hidden" id="reformat" value="1" />
 		<input type="hidden" id="compress" value="0" />
-
+			
 		<div id="json-composite-placeholder">
 
         <div id="results_header" class="hide">
@@ -29,38 +29,9 @@
                 Results <img title="Loading..." class="reset" alt="Loading" src="images/loadspinner.gif" id="loadSpinner" name="loadSpinner">
             </h3>
         </div>
-
-        <script data-main="js/main" src="js/lib/require.js"></script>
-
-        <script>
-	        require([
-	            'bootstrap.bundle',
-	            'lib/diff',
-	            'jsonlint/JSONComposite',
-	            'utils/utils'
-	        ], function(noop, noop, JSONComposite, HelpferFunctions) {
-		        var JSON_PARAM = HelpferFunctions._getURLParameter('json');
-
-				// this needs to be in a composite
-				jsonComposite = new JSONComposite({
-				    el 		: $('#json-composite-placeholder'),
-					json 	: JSON_PARAM
-			    });
-	        });
-	    </script>
-
-	    <script type="text/javascript">
-
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-2118091-14']);
-          _gaq.push(['_trackPageview']);
-
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-
-        </script>
+        
+        <script src="js/main.js"></script>
+        <script src="js/jsonlint/jsl.format.js"></script>
+        <script src="js/jsonlint/jsl.parser.js"></script>
 	</body>
 </html>
