@@ -4,24 +4,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="description" content="JSON Lint is a web based validator and reformatter for JSON, a lightweight data-interchange format.">
-    
-    <title>JSONLint - The JSON Validator</title>
 
-    <script type="text/javascript">
-        if (typeof JSON === 'undefined') {
-            document.write('<sc' + 'ript type="text/javascript" src="c/js/json2.js"></sc' + 'ript>');
-        }
-    </script>
+    <title>JSONLint - The JSON Validator</title>
 
     <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
     <link href="css/jquery-linedtextarea.css" type="text/css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png" />
 </head>
     <body>
      	<a href="http://www.arc90.com/" id="arc90-logo" title="An Arc90 Lab Experiment">Arc90.com</a>
 
 		<input type="hidden" id="reformat" value="1" />
 		<input type="hidden" id="compress" value="0" />
-			
+
 		<div id="json-composite-placeholder">
 
         <div id="results_header" class="hide">
@@ -29,7 +24,12 @@
                 Results <img title="Loading..." class="reset" alt="Loading" src="images/loadspinner.gif" id="loadSpinner" name="loadSpinner">
             </h3>
         </div>
-        
+
+        <script type="text/javascript">
+            if (typeof JSON === 'undefined') {
+                document.write('<sc' + 'ript type="text/javascript" src="js/utils/json2.js"></sc' + 'ript>');
+            }
+        </script>
         <script src="js/main.js"></script>
         <script src="js/jsonlint/jsl.format.js"></script>
         <script src="js/jsonlint/jsl.parser.js"></script>
