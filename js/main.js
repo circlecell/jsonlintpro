@@ -507,7 +507,7 @@ var utils = {
 		    }
 		    if (selectionEnd < 0) selectionEnd = 0;
 		    else selectionEnd = Math.min(input.value.length, selectionEnd);
-		    
+
 		    // If available (thus IE), use the createTextRange method
 		    if (typeof input.createTextRange == "function") {
 		        var range = input.createTextRange();
@@ -522,33 +522,33 @@ var utils = {
 		        leftPos = offset.left,
 		        width = getInputCSS('width', true),
 		        height = getInputCSS('height', true);
-		
+
 		        // Styles to simulate a node in an input field
 		    var cssDefaultStyles = "white-space:pre;padding:0;margin:0;",
 		        listOfModifiers = ['direction', 'font-family', 'font-size', 'font-size-adjust', 'font-variant', 'font-weight', 'font-style', 'letter-spacing', 'line-height', 'text-align', 'text-indent', 'text-transform', 'word-wrap', 'word-spacing'];
-		
+
 		    topPos += getInputCSS('padding-top', true);
 		    topPos += isNaN(getInputCSS('border-top-width', true)) ? 0 : getInputCSS('border-top-width', true);
 		    leftPos += getInputCSS('padding-left', true);
 		    leftPos += isNaN(getInputCSS('border-left-width', true)) ? 0 : getInputCSS('border-left-width', true);
 		    leftPos += 1; //Seems to be necessary
-		
+
 		    for (var i=0; i<listOfModifiers.length; i++) {
 		        var property = listOfModifiers[i];
 		        cssDefaultStyles += property + ':' + getInputCSS(property) +';';
 		    }
 		    // End of CSS variable checks
-		
+
 		    var text = input.value,
 		        textLen = text.length,
 		        fakeClone = document.createElement("div");
 		    if(selectionStart > 0) appendPart(0, selectionStart);
 		    var fakeRange = appendPart(selectionStart, selectionEnd);
 		    if(textLen > selectionEnd) appendPart(selectionEnd, textLen);
-		
+
 		    // Styles to inherit the font styles of the element
 		    fakeClone.style.cssText = cssDefaultStyles;
-		
+
 		    // Styles to position the text node at the desired position
 		    fakeClone.style.position = "absolute";
 		    fakeClone.style.top = topPos + "px";
@@ -557,10 +557,10 @@ var utils = {
 		    fakeClone.style.height = height + "px";
 		    document.body.appendChild(fakeClone);
 		    var returnValue = fakeRange.getBoundingClientRect(); //Get rect
-		    
+
 		    if (!debug) fakeClone.parentNode.removeChild(fakeClone); //Remove temp
 		    return returnValue;
-		
+
 		    // Local functions for readability of the previous code
 		    function appendPart(start, end){
 		        var span = document.createElement("span");
@@ -815,7 +815,7 @@ var FADE_SPEED = 100,
 	        var jsonVal = $.trim(this.textarea.val());
 
 	        if (jsonVal.substring(0, 4).toLowerCase() === "http") {
-	            $.post("utils/proxy.php", {"url": jsonVal}, _.bind(function (responseObj) {
+	            $.post("js/utils/proxy.php", {"url": jsonVal}, _.bind(function (responseObj) {
 	                this.textarea.val(responseObj.content);
 
 	                this.validate();
