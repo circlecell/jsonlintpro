@@ -1,3 +1,43 @@
+<?php
 
-Notice: Undefined index: url in /srv/www/jsonlint/proxy.php on line 3
-{ "result": "Invalid URL. Please check your URL and try again.", "error": true }{ "result": "Unable to parse URL. Please check your URL and try again.", "error": true }
+$url = filter_var($_POST['url'], FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+
+if (!$url || !preg_match("/^https?:/i", $url)) {
+    echo '{ "result": "Invalid URL. Please check your URL and try again.", "error": true }';
+}
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$data = curl_exec($ch);
+$info = curl_getinfo($ch);
+curl_close($ch);
+
+if ($data === false) {
+	echo '{ "result": "Unable to parse URL. Please check your URL and try again.", "error": true }';
+	return;
+}
+
+$contentLength = intval($info['download_content_length']);
+$status = intval($info['http_code']);
+
+if ($status >= 400) {
+	echo '{ "result": "URL returned bad status code ' . $status . '.", "error": true }';
+	return;
+}
+
+if ($contentLength >= 52428800) {
+	echo '{ "result": "URL content length greater than 10 megs (' . $contentLength . '). Validation not available for files this large.", "responseCode": "1" }';
+	return;
+}
+
+$response = new StdClass();
+$response->status = $status;
+$response->length = $contentLength;
+$response->url = $info['url'];
+$response->content = $data;
+
+echo json_encode($response);
+
+?>
