@@ -8,6 +8,7 @@ var jsl = typeof jsl === 'undefined' ? {} : jsl;
 jsl.format = (function () {
 
     function repeat(s, count) {
+        count = count < 0 ? 0 : count;
         return new Array(count + 1).join(s);
     }
 
